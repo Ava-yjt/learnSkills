@@ -1,5 +1,10 @@
 #Git
 <img decoding="async" src="img/Git.png" width="50%">
+```
+git add .
+git commit -m "wrote a readme file"
+git push origin main
+```
 ##创建版本库
 
 1. 新建目录，通过git init命令把这个目录变成Git可以管理的仓库
