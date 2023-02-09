@@ -3,6 +3,7 @@
 ```
 git add .
 git commit -m "wrote a readme file"
+git commit -a --amend //修补式提交
 git push origin main
 ```
 ##创建版本库
@@ -12,6 +13,16 @@ git push origin main
 3. 添加到仓库，把文件修改添加到暂存区git add readme.txt
 4. 提交到仓库，暂存区的所有内容提交到当前分支git commit -m "wrote a readme file"
 *HEAD指向的版本就是当前版本 上一个版本就是HEAD\^，上上一个版本就是HEAD\^^，上100个版本写成HEAD~100*
+
+##远程库
+###远程库关联
+1. 要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git；
+2. 关联一个远程库时必须给远程库指定一个名字，origin是默认习惯命名；
+3. 关联后，使用命令git push -u origin main第一次推送main分支的所有内容；
+4. 此后，每次本地提交后，可以使用命令git push origin main推送最新修改
+
+###远程库克隆
+git clone git@github.com:Ava-yjt/learnSkills.git
 
 ##版本回退
 备注：还未推送到远程库</u>
@@ -25,16 +36,6 @@ Git checkout -- file让这个文件回到最近一次git commit或git add时的�
 *场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
 场景2：当你不但改乱了工作区某个文件的内容，还add到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD <file>，就回到了场景1，第二步按场景1操作。
 场景3：已经commit不合适的修改到版本库时，想要撤销本次提交，参考版本回退，不过前提是没有推送到远程库。*
-
-##远程库
-###远程库关联
-1. 要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git；
-2. 关联一个远程库时必须给远程库指定一个名字，origin是默认习惯命名；
-3. 关联后，使用命令git push -u origin main第一次推送master分支的所有内容；
-4. 此后，每次本地提交后，只要有必要，就可以使用命令git push origin main推送最新修改
-
-###远程库克隆
-git clone git@github.com:Ava-yjt/learnSkills.git
 
 ##分支管理
 
@@ -51,7 +52,7 @@ git clone git@github.com:Ava-yjt/learnSkills.git
 2. 在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
 3. 从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
 4. 如果有冲突，要先本地处理冲突再重新提交
-5. git pull失败说明未关联，先建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+5. git pull失败说明未关联，先建立本地分支和远程分支的关联，使用git branch --set-upstream-to branch-name origin/branch-name；
 
 
 ##常用命令
