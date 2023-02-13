@@ -41,28 +41,23 @@ public class Hello {
     }
 } // class定义结束
 ```
-###运行java文件
-推荐在启动JVM时设置classpath变量，不推荐在系统环境变量中设置classpath。
-java -cp bin（路径） com.itranswarp.sample.Hello（public类名） 
-运行时使用哪个JDK版本，编译时就尽量使用同一版本编译源码。
 
-jar包
-jar包相当于目录，可以包含很多.class文件，方便下载和使用；jar包里的第一层目录，不能是bin。
-MANIFEST.MF文件可以提供jar包的信息，如Main-Class，这样可以直接运行jar包。
-java -jar hello.jar
 
 ###实例化方法
 ```java
 Object referenceVariable = new Constructor();
+//引用类型 变量 = XX类型的实例
 ```
-内部类的实例化
-```java
-Outer.Inner inner = outer.new Inner();
-```
+
 数组声明定义
 ```java
 double[] list = {0,0,0};
 String [][] s = new String[2][];
+```
+
+内部类的实例化
+```java
+Outer.Inner inner = outer.new Inner();
 ```
 
 输入
@@ -125,7 +120,7 @@ for (初始条件; 循环检测条件; 循环后更新计数器) {
 
 public class Main {
     public static void main(String[] args) {
-        Person p = new Person(); // 编译错误:找不到这个构造方法
+        Person p = new Person(); // 编译错误:找不到这个构造方法。
     }
 }
 
@@ -145,13 +140,15 @@ class Person {
 ```
 实例在创建时通过new操作符会调用其对应的构造方法，构造方法用于初始化实例；
 
-没有定义构造方法时，编译器会自动创建一个默认的无参数构造方法；
+没有定义构造方法时，编译器会自动创建一个默认的无参数构造方法；自定义构造方法后编译器就不再自动创建默认构造方法；
 
 可以定义多个构造方法，编译器根据参数自动判断；
 
 可以在一个构造方法内部通过this调用另一个构造方法，便于代码复用
 
 ###继承（代码复用）
+extends
+如果父类没有默认的构造方法，子类就必须显式调用super()并给出参数
 ```java
 class Student extends Person {
     protected int score;
@@ -162,26 +159,48 @@ class Student extends Person {
     }
 }
 ```
-protected关键字可以把字段和方法的访问权限控制在继承树内部
-如果父类没有默认的构造方法，子类就必须显式调用super()并给出参数以便让编译器定位到父类的一个合适的构造方法。
-可以安全地向上转型；向下转型先通过instanceof判断一个变量所指向的实例是否是指定类型或这个类型的子类，如果是自动转为该类型
+
+```java
+//向上转型
+Student s = new Student();
+Person p = s
+//向下转型
+Student s = new Student();
+s instanceof Person;
+//先通过instanceof判断一个变量所指向的实例是否是指定类型或这个类型的子类，如果是自动转为该类型
+```
 
 ###重载(Overload)
-重载(overloading) 是在一个类里面，方法名字相同，功能类似，而参数不同。返回类型可以相同也可以不同。
+重载(overloading) 是在一个类里面，方法名字相同，功能类似，而**参数不同**。返回类型可以相同也可以不同。
 
 每个重载的方法（或者构造函数）都必须有一个独一无二的参数类型列表。
 
 最常用的地方就是构造器的重载。
 ###覆写（Override）
-在继承关系中，子类如果定义了一个与父类方法名字相同，参数列表和返回值类型都相同的方法，被称为覆写（Override）。外壳不变，核心重写！
-构造方法不能被重写。当需要在子类中调用父类的被重写方法时，要使用 super 关键字。
+在继承关系中，子类如果定义了一个与父类方法名字相同，**参数列表和返回值类型都相同**的方法，被称为覆写（Override）。
+构造方法不能被重写。
+当需要在子类中调用父类的被重写方法时，要使用 super 关键字。
 
 ###多态
 多态是指，针对某个类型的方法调用，其真正执行的方法取决于运行时期实际类型的方法。
 ###抽象
 ```java
+public class Main {
+    public static void main(String[] args) {
+        Person p = new Student();
+        p.run();
+    }
+}
+
 abstract class Person {
     public abstract void run();
+}
+
+class Student extends Person {
+    @Override
+    public void run() {
+        System.out.println("Student.run");
+    }
 }
 ```
 把一个方法声明为abstract，表示它是抽象方法，本身没有实现任何方法语句。
@@ -193,7 +212,7 @@ abstract class Person {
 具体的业务逻辑由不同的子类实现，调用者并不关心。
 
 ###接口
-
+interface 类名   ；implements
 在抽象类中，抽象方法本质上是定义接口规范：即规定高层类的接口，从而保证所有子类都有相同的接口实现。
 ```java
 interface Person {
@@ -232,9 +251,45 @@ class Students implements Person, Hello { // 实现了两个interface
 
 接口可以定义default方法，不必在子类中覆写。
 
-###静态字段、方法
+###static静态字段、方法
 静态字段属于所有实例“共享空间”的字段，实际上是属于class的字段；
+无论修改哪个实例的静态字段，所有实例的静态字段都被修改；
 
-调用静态方法不需要实例，无法访问this，但可以访问静态字段和其他静态方法；
+通过类名就可以调用静态方法，不需要实例；
+无法访问this，但可以访问静态字段和其他静态方法；
 
 静态方法常用于工具类和辅助方法，如main。
+
+###classpath
+JVM通过环境变量classpath决定搜索class的路径和顺序。
+在Windows系统上，用;分隔，\连接，带空格的目录用""括起来；Linux系统上，用:分隔，/连接。
+推荐在启动JVM时设置classpath变量，不推荐在系统环境变量中设置classpath。
+```
+java -cp bin（路径） com.itranswarp.sample.Hello（public类名） 
+java abc.xyz.Hello[^1]
+```
+运行时使用哪个JDK版本，编译时就尽量使用同一版本编译源码。
+
+[^1]:当前目录可直接省略-cp和bin
+
+###jar包
+用于存放cass的容器，jar包相当于目录，可以包含很多.class文件；
+创建方法：右键选择“发送到”，“压缩(zipped)文件夹”，然后把后缀从.zip改为.jar。
+jar包里的第一层目录，不能是bin。
+MANIFEST.MF文件可以提供jar包的信息，如Main-Class，这样可以直接运行jar包。
+执行jar包的class：
+```
+java -cp ./hello.jar abc.xyz.Hello
+java -jar hello.jar
+```
+###模块
+命名规范与包相同
+只有module-info.java声明的导出的包，外部代码才被允许访问
+```java
+module hello.world {            //关键字module 模块的名称
+    exports com.itranswarp.sample;  //导出给其他模块使用
+
+    requires java.base;          //依赖的其他模块
+	requires java.xml;
+}
+```
