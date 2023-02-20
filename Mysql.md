@@ -66,6 +66,30 @@ avg(字段名)
 max(字段名)
 min(字段名)
 
+###子查询
+```
+//select嵌套
+select
+    ...
+from
+    ...
+where
+    (select ... from ...)
+
+```
+
+```
+//from后的嵌套可以当作一张临时表，起别名
+select
+    ...
+from
+    (select ... from ...) t  （//别名t）
+where
+    ...
+
+```
+
+
 ##主键PK
 
 每张表都必须有，主键值不为NULL且不能重复，一般是数字（int bigint char），定长，不需要有意义；一张表只能添加一个主键约束
