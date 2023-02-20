@@ -83,9 +83,11 @@ order by
     ...
 having
     ...
+limit
+    ...
 ```
  
-**执行顺序：from, where, group by, habing, select, order by**
+**执行顺序：from, where, group by, habing, select, order by, limit**
 select语句中如果有分组，select后只能加分组的字段和分组函数
 使用having可以对分组后的数据进一步过滤，但不能单独使用，不能替代where
 **去除重复记录**
@@ -158,7 +160,7 @@ distinct 只能放在所有字段的前端，表示联合去重
     ```
 
 ###子查询
-```
+```sql
 //select嵌套
 select
     ...
@@ -169,7 +171,7 @@ where
 
 ```
 
-```
+```sql
 //from后的嵌套可以当作一张临时表，起别名
 select
     ...
@@ -180,6 +182,29 @@ where
 
 ```
 
+###union合并
+```sql
+select ...
+union
+select ...
+```
+
+在减少匹配次数的情况下，可以完成两个结果集（要求列一致）的拼接
+
+###通用分页
+limit：分页查询中，将查询结果的一部分显示出来；在order by之后执行
+```sql
+//select嵌套
+select
+    ...
+from
+    ...
+order by
+    ...
+limit 起始下标（默认为0.可缺省）,长度
+```
+###通用分页第pageNo页
+limit  (pageNo - 1) * pageSize, pageSize
 
 ##主键PK
 
@@ -209,4 +234,28 @@ foreigh key(cno) references t_class(classno)
 一张表拆分：一对一，外键唯一(fk+unique)
 有时候为了满足用户需求，会拿冗余换速度（表连接多速度慢），并且开发人员的编写难度也会降低
 
-#Mysql连接
+#表的创建
+##建表
+表名_t_或者tb1_开始；所有标识符用_连接，小写。
+create table 表名（
+    字段名1 数据类型 defualt 默认值，
+    字段名1 数据类型
+）；
+删除表：drop 表名： 或者 drop table if 表 exits;
+
+##数据类型
+varchar（可变长，最长255）
+char（定长）
+int（最长11） bigint float double 
+date（短日期） datetime（长日期）
+clob（超过255的字符大对象，4G） blob（二进制大对象，图片】声音、视频等媒体类型，需使用IO流）
+
+
+##insert插入数据
+insert  into 表名（字段名1,字段名2) values(值1,值2)；  //没有指定的字段为Null
+字段名可以省略，等价于写上了所有字段名
+**插入日期**
+格式化数字：format (数字,'格式')
+str_to_date('01-10-1990,'d%-m%-y% 将varchar 转成date
+date_format 将date转换成一定
+
