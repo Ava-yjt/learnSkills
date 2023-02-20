@@ -71,7 +71,7 @@ max(字段名)
 min(字段名)
 
 ###分组查询
-```
+```sql
 select
     ...
 from
@@ -98,7 +98,7 @@ distinct 只能放在所有字段的前端，表示联合去重
 1. 内连接
    >避免笛卡尔积现象；把完全能匹配上这个连接的数据查询出来，两种表没有主次关系
    - 等值连接
-    ```
+    ```sql
     //找出员工的薪资等级
     select
         e.ename, d.dname
@@ -112,7 +112,7 @@ distinct 只能放在所有字段的前端，表示联合去重
    - 非等值连接
      on e.salary between s.losa and a.hisa
    - 自连接
-    ```
+    ```sql
     //找出员工的上级
     select
         a.ename as '员工名', b.ename as '领导名'
@@ -125,7 +125,7 @@ distinct 只能放在所有字段的前端，表示联合去重
     ```
 2. 外连接
    - 右外连接 将join右边的表中数据全部查询出来，捎带着左边的次表
-    ```
+    ```sql
     //找出员工的上级
     select
         e.ename, d.dname
@@ -138,7 +138,7 @@ distinct 只能放在所有字段的前端，表示联合去重
     ```
    - 左外连接 left outer
 
-    ```
+    ```sql
     //多张表的连接
     select
         ...
