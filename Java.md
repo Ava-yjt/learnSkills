@@ -13,7 +13,10 @@
 ```
 
 ###访问修饰符
-public（能够被任何其他类访问）  private（只能被所属类访问）  protected（同一包的继承树内部）  default（同一包内可见）
+1. public（能够被任何其他类访问）
+2. private（只能被所属类访问）
+3. protected（同一包的继承树内部） 
+4. default（同一包内可见）
 ###非访问修饰符
 1. static 修饰符，静态变量只有一份拷贝,局部变量不能被声明为 static 变量。静态方法从参数列表得到数据,不能使用类的非静态变量。
 
@@ -266,11 +269,10 @@ JVM通过环境变量classpath决定搜索class的路径和顺序。
 推荐在启动JVM时设置classpath变量，不推荐在系统环境变量中设置classpath。
 ```
 java -cp bin（路径） com.itranswarp.sample.Hello（public类名） 
-java abc.xyz.Hello[^1]
+java abc.xyz.Hello
+//当前目录可直接省略-cp和bin
 ```
-运行时使用哪个JDK版本，编译时就尽量使用同一版本编译源码。
-
-[^1]:当前目录可直接省略-cp和bin
+运行时使用哪个JDK版本，编译时就尽量使用同一版本编译源码。aa
 
 ###jar包
 用于存放cass的容器，jar包相当于目录，可以包含很多.class文件；
@@ -293,3 +295,4 @@ module hello.world {            //关键字module 模块的名称
 	requires java.xml;
 }
 ```
+

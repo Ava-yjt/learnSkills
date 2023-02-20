@@ -1,9 +1,9 @@
-#Mysql
+#Mysql语法
 
 Mysql默认启动端口号是3306
 
-
-命令不区分大小写
+##常用命令
+（命令不区分大小写）
 net stop MySQL
 net start MySQL
 mysql -u root -p
@@ -12,7 +12,9 @@ create database XXX
 use database XXX
 exit
 
-##DQL
+##DQ（原表数据不会修改）
+
+单表查询
 
 ###查看表
 select * from XXX
@@ -59,7 +61,9 @@ ifnull(空的数据，替换值) 将null转为具体值
 case .. when .. then .. when .. then .. else .. end 
 
 ###分组函数（多行处理函数）
-*先分组再处理，一张表默认为一组分组函数自动忽略null；分组函数不能直接使用在where语句*
+**必须先分组在使用分组函数，一张表默认为一组**
+*分组函数自动忽略null；分组函数不能直接使用在where语句h后*
+
 count(字段名) 统计不为null的  count(*) 统计表的总行数
 sum(字段名)
 avg(字段名)
@@ -98,7 +102,7 @@ id int primary key
 复合主键（表级约束）
 primary key (id,name)
 
-主键自增，从1开始
+主键自增，从1开始                   
 id int primary key auto_increment
 
 自然主键（自然数，使用更多），业务主键
@@ -117,3 +121,5 @@ foreigh key(cno) references t_class(classno)
 
 一张表拆分：一对一，外键唯一(fk+unique)
 有时候为了满足用户需求，会拿冗余换速度（表连接多速度慢），并且开发人员的编写难度也会降低
+
+#Mysql连接
