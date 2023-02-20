@@ -69,6 +69,90 @@ sum(字段名)
 avg(字段名)
 max(字段名)
 min(字段名)
+###分组查询
+```sql
+select
+    ...
+from
+    ...
+where
+    ... 
+group by
+    ...
+order by
+    ...
+having
+    ...
+```
+ 
+**执行顺序：from, where, group by, habing, select, order by**
+select语句中如果有分组，select后只能加分组的字段和分组函数
+使用having可以对分组后的数据进一步过滤，但不能单独使用，不能替代where
+**去除重复记录**
+select distinct ... from ...
+distinct 只能放在所有字段的前端，表示联合去重
+###连接查询
+1. 内连接
+   >避免笛卡尔积现象；把完全能匹配上这个连接的数据查询出来，两种表没有主次关系
+   - 等值连接
+    ```sql
+    //找出员工的薪资等级
+    select
+        e.ename, d.dname
+    from
+        emp e
+    (inner) join
+        dept d  //给表起别名加效率
+    on
+        e.deptno = d.deptno   //e 和 d的连接体条件
+    ```
+   - 非等值连接
+     on e.salary between s.losa and a.hisa
+   - 自连接
+    ```sql
+    //找出员工的上级
+    select
+        a.ename as '员工名', b.ename as '领导名'
+    from
+        emp a
+    right join
+        emp b  //给表起别名加效率
+    on
+        e.mgr = b.empno   //e 和 d的连接条件
+    ```
+2. 外连接
+   - 右外连接 将join右边的表中数据全部查询出来，捎带着左边的次表
+    ```sql
+    //找出员工的上级
+    select
+        e.ename, d.dname
+    from
+        emp e
+    right outer join
+        dept d  //给表起别名加效率
+    on
+        e.deptno = d.deptno   //e 和 d的连接体条件
+    ```
+   - 左外连接 left outer
+    ```sql
+    //多张表的连接
+    select
+        ...
+    from
+        a
+    (inner) join
+        b
+    on
+        b 和 b的连接条件
+    join
+        c
+    on
+        a 和 c的连接条件
+    right join
+        d
+    on
+        a 和 d的连接条件
+    ```
 
 ###子查询
 ```
