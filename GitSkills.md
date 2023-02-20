@@ -1,5 +1,18 @@
 #Git
 <img decoding="async" src="img/Git.png" width="50%">
+
+>**查看 ssh 公钥方法**：
+打开你的 git bash 窗口
+进入 .ssh 目录：cd ~/.ssh
+找到 id_rsa.pub 文件：ls
+查看公钥：cat id_rsa.pub 或者 vim id_rsa.pub
+
+>**生成密钥**
+git输入ssh-keygen -t rsa命令，指定RSA算法生成密钥，然后敲三次回车键，期间不需要输入密码，之后就就会生成两个文件，分别为>id_rsa和id_rsa.pub，即密钥id_rsa和公钥id_rsa.pub. 对于这两个文件，其都为隐藏文件，默认生成在以下目录：
+Linux 系统：~/.ssh
+Mac 系统：~/.ssh
+Windows 系统：C:\Documents and Settings\username\.ssh
+Windows 10 ThinkPad：C:\Users\think.ssh
 ```
 git add .
 git commit -m "wrote a readme file"
