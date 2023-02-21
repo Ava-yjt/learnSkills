@@ -11,8 +11,9 @@ show databases
 create database XXX
 use database XXX
 exit
+source 路径xxx.sql  批量执行aql脚本
 
-##DQ（原表数据不会修改）
+#DQL（原表数据不会修改）
 
 单表查询
 
@@ -60,7 +61,7 @@ rand() 生成随机数
 ifnull(空的数据，替换值) 将null转为具体值
 case .. when .. then .. when .. then .. else .. end 
 
-###分组函数（多行处理函数）
+##分组函数（多行处理函数）
 **必须先分组在使用分组函数，一张表默认为一组**
 *分组函数自动忽略null；分组函数不能直接使用在where语句h后*
 
@@ -69,7 +70,8 @@ sum(字段名)
 avg(字段名)
 max(字段名)
 min(字段名)
-###分组查询
+
+##分组查询
 ```sql
 select
     ...
@@ -93,7 +95,7 @@ select语句中如果有分组，select后只能加分组的字段和分组函�
 **去除重复记录**
 select distinct ... from ...
 distinct 只能放在所有字段的前端，表示联合去重
-###连接查询
+##连接查询
 1. 内连接
    >避免笛卡尔积现象；把完全能匹配上这个连接的数据查询出来，两种表没有主次关系
 
@@ -139,6 +141,8 @@ distinct 只能放在所有字段的前端，表示联合去重
         e.deptno = d.deptno   //e 和 d的连接体条件
     ```
     - 左外连接 left outer
+    - 多张表的连接
+
     ```sql
     //多张表的连接
     select
@@ -159,7 +163,7 @@ distinct 只能放在所有字段的前端，表示联合去重
         a 和 d的连接条件
     ```
 
-###子查询
+##子查询
 ```sql
 //select嵌套
 select
@@ -182,7 +186,7 @@ where
 
 ```
 
-###union合并
+##union合并
 ```sql
 select ...
 union
@@ -203,29 +207,123 @@ order by
     ...
 limit 起始下标（默认为0.可缺省）,长度
 ```
-###通用分页第pageNo页
-limit  (pageNo - 1) * pageSize, pageSize
+##通用分页
+第pageNo页
+limit (pageNo - 1) * pageSize, pageSize
 
-##主键PK
+#数据类型
+1. varchar（可变长，最长255）char（定长）
+2. int（最长11） bigint
+3. float double 
+4. date（短日期） datetime（长日期）
+5. clob（超过255的字符大对象，4G） blob（二进制大对象，图片】声音、视频等媒体类型，需使用IO流）
 
-每张表都必须有，主键值不为NULL且不能重复，一般是数字（int bigint char），定长，不需要有意义；一张表只能添加一个主键约束
-单一主键
+#DML（对表中数据增删改）
+##表的创建
+表名_t_或者tb1_开始；所有标识符用_连接，小写。
+```sql
+create table 表名（
+    字段名1 数据类型 defualt 默认值，
+    字段名1 数据类型
+）；
+
+//快速创建表
+create table 表名 as select ... from ...; 
+```
+删除表：drop 表名： 或者 drop table if 表 exits;
+
+##insert插入数据
+```sql
+insert into 表名(字段名1,字段名2) values(值1,值2)；  //没有指定的字段为Null
+insert into 表名(字段名1,字段名2) values(值1,值2),(),()；  //插入多条记录
+//快速插入（要符合表的结构）
+insert into 表名 select ... from ...; 
+```
+字段名可以省略，等价于写上了所有字段名
+**插入日期**
+date默认格式 y%-m%-d%
+date默认格式 y%-m%-d% %h:%i:%s
+
+str_to_date('01-10-1990,'d%-m%-y% ）将varchar转成date
+date_format(日期类型数据,'日期格式 ） 将date转换成特定格式的字符串，通常用在查询日期设置展示的格式
+now()获取当前时间,datetime类型
+
+##update修改
+update 表名 set 字段名1 = 值1, 字段名2 = 值2 where ...;
+
+##delete  删除数据
+```sql
+delete from 表名 where ...;
+```
+表中数据被删除，但是在硬盘上的真实空间不会被释放，可回滚
+
+#DDL
+create drop alter
+改表结构：添加删除修改字段，需要使用alter
+##truncate  快速删除数据(DDL)
+```sql
+truncate teble 表名;
+```
+表中数据被物理删除，效率高，不支持可回滚
+
+#约束（保证数据的有效性）
+##非空约束 not null
+```sql
+字段 类型 not null;
+```
+##唯一性约束 unique
+```sql
+字段 类型 unique;   //列级约束
+unique(字段名1, 字段名2); //表级约束，联合唯一
+```
+unique可以都为null
+
+not null和unique可以联合
+
+##主键约束 PK
+
+每张表都必须有主键，主键值**不为NULL**且不能重复
+一般是数字（int bigint char），定长，不需要有意义；
+一张表只能添加一个主键约束
+- 单一主键
 id int primary key
-复合主键（表级约束）
+- 复合主键（表级约束）
 primary key (id,name)
 
-主键自增，从1开始                   
+- 主键自增，从1开始                   
 id int primary key auto_increment
-
-自然主键（自然数，使用更多），业务主键
-
-###外键约束FK
-子表中的外键引用的父表中某个字段不一定是主键，但必须具有唯一性
+- 自然主键（自然数，使用更多），
+- 业务主键
+##外键约束 FK
+子表中的外键引用的父表中某个字段不一定是主键，但**必须具有唯一性**
 外键值可以是NULL
+```sql
 cno int,
 foreigh key(cno) references t_class(classno)
+```
+先创父表在建子表，先删子表再删父表
 
-##数据库设计的三范式
+*存储引擎
+mysql默认存储引擎engine=InnoDB，默认字符编码charset=utf8，建表时指定*
+
+#事务transaction（DML)
+事务：一个完整的业务逻辑就，一个最小的工作单元，不可分。本质上是多条DML语句同时成功，同时失败。
+关闭mysql自动提交机制： start transaction
+手动提交 commit
+回滚rollback 回到上次的提交点
+
+##事务的特性
+- 原子性A
+- 一致性C
+- 隔离性I
+  隔离级别
+  - 读未提交（最低级别）：存在脏读
+  - 读已提交：只能读取另一个事务已提交的数据，解决了脏读，问题不可重复读取数据，永远读取到的都是刚开启事务时的数据
+  - 可重复读（mysql默认）：事务开启后，不管多久，读取到的数据都是一致的，可能会出现幻影读
+  - 序列化/串行化：事务排队，不能并发
+- 持久性D
+
+#数据库设计的三范式
 避免表中数据冗余，空间浪费。
 1. 任何一张表必须有主键，每一个字段原子性不可再分（字段要精细）；
 2. 所有非主键字段完全依赖主键，不要产生部份依赖（例如学生教师，复合主键数据冗余。**多对多，三张表，关系表两个外键**）；
@@ -233,29 +331,4 @@ foreigh key(cno) references t_class(classno)
 
 一张表拆分：一对一，外键唯一(fk+unique)
 有时候为了满足用户需求，会拿冗余换速度（表连接多速度慢），并且开发人员的编写难度也会降低
-
-#表的创建
-##建表
-表名_t_或者tb1_开始；所有标识符用_连接，小写。
-create table 表名（
-    字段名1 数据类型 defualt 默认值，
-    字段名1 数据类型
-）；
-删除表：drop 表名： 或者 drop table if 表 exits;
-
-##数据类型
-varchar（可变长，最长255）
-char（定长）
-int（最长11） bigint float double 
-date（短日期） datetime（长日期）
-clob（超过255的字符大对象，4G） blob（二进制大对象，图片】声音、视频等媒体类型，需使用IO流）
-
-
-##insert插入数据
-insert  into 表名（字段名1,字段名2) values(值1,值2)；  //没有指定的字段为Null
-字段名可以省略，等价于写上了所有字段名
-**插入日期**
-格式化数字：format (数字,'格式')
-str_to_date('01-10-1990,'d%-m%-y% 将varchar 转成date
-date_format 将date转换成一定
 
