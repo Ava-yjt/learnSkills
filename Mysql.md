@@ -11,7 +11,7 @@ show databases
 create database XXX
 use database XXX
 exit
-source 路径xxx.sql  批量执行aql脚本
+source 路径xxx.sql  批量执行sql脚本
 
 #DQL（原表数据不会修改）
 
@@ -313,15 +313,79 @@ mysql默认存储引擎engine=InnoDB，默认字符编码charset=utf8，建表�
 回滚rollback 回到上次的提交点
 
 ##事务的特性
-- 原子性A
-- 一致性C
-- 隔离性I
+- 原子性 A
+- 一致性 C
+- 隔离性 I
   隔离级别
-  - 读未提交（最低级别）：存在脏读
-  - 读已提交：只能读取另一个事务已提交的数据，解决了脏读，问题不可重复读取数据，永远读取到的都是刚开启事务时的数据
-  - 可重复读（mysql默认）：事务开启后，不管多久，读取到的数据都是一致的，可能会出现幻影读
-  - 序列化/串行化：事务排队，不能并发
-- 持久性D
+  - 读未提交（最低级别）read uncommited：存在脏读
+  - 读已提交 read commited：只能读取另一个事务已提交的数据，解决了脏读，问题不可重复读取数据，一个事务开启过程中读取的数据可能被其他事务篡改
+  - 可重复读（mysql默认）repeatable read：事务开启后，不管多久，读取到的数据都是一致的，可能会出现幻影读
+  - 序列化/串行化 serializable：事务排队，不能并发
+- 持久性 D
+
+###查看事务隔离级别
+select @@tx_isolation
+select @@session.tx_isolation
+select @@global.tx_isolation
+###查看事务隔离级别
+set global transaction isolation level read commited
+
+
+#索引
+- 数据库优化的重要手段
+- 在数据库表上为字段添加索引，是为了缩小查找范围（扫描某个区间），提高查找效率
+- 主键会自动创建索引
+- mysql中unique也会自动创建索引，并且索引是一个单独的对象
+- 原理：B-Tree，中序查找
+
+##添加索引
+- 数据量庞大
+- 该字段经常出现在where后被扫描
+- 该字段很少DML操作（DML后需要索引重新排序）
+
+索引需要维护，太多会降低系统性能，建议通过unique查询
+
+```sql
+//创建索引
+create index 索引名 on 表名(字段名);
+//删除索引
+drop index 索引名 on 表名;
+//查看索引，显示ref/all
+explain select ... from ...
+```
+##索引失效
+1. 模糊查询时以%开头；
+2. 使用or使，要求两边都有索引；
+3. 使用复合索引时没有使用左侧的列；
+4. where中索引列参加了运算；
+5. 在where中使用了函数。
+
+##索引类型
+1. 单一索引、复合索引
+2. 主键索引、唯一性索引（unique字段）
+
+#视图 view
+```sql
+create view 视图名 as DQL语句;
+drop view 视图名;
+select ... from 视图名;
+```
+对视图的操作会影响原表;
+可以把重复使用的复杂SQL语句以视图对象形式新建，修改时只需要修改视图；
+面向视图开发：把视图当作table进行CRUD（增删改查），简化开发，利于维护
+
+#DBA
+新建用户、授权、回收权限、导入导出（备份）
+
+```sql
+//导出：在windows dos窗口
+mysqldump 数据库名>路径\备份名.sql -uroot -p密码
+mysqldump 数据库名 表名>路径\备份名.sql -uroot -p密码
+//导入
+create database数据库名
+use 数据库名
+source 路径\备份名.sql
+```
 
 #数据库设计的三范式
 避免表中数据冗余，空间浪费。
