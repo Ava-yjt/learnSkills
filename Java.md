@@ -299,3 +299,19 @@ module hello.world {            //关键字module 模块的名称
 ```
 
 ##异常处理
+```java
+try (resource declaration) {   // 使用的资源
+  //代码块
+}catch(异常类型1 异常的变量名1){
+  // 程序代码
+}catch(异常类型2 异常的变量名2){
+  // 程序代码
+}finally{
+  // 程序代码
+}
+```
+finally 关键字用来创建在 try 代码块后面执行的代码块。
+无论是否发生异常，finally 代码块中的代码总会被执行。
+在 finally 代码块中，可以运行清理类型等收尾善后性质的语句。
+
+try-with-resources 语句可以关闭所有实现 AutoCloseable 接口的资源。
