@@ -299,6 +299,7 @@ module hello.world {            //关键字module 模块的名称
 ```
 
 ##异常处理
+
 ```java
 try (resource declaration) {   // 使用的资源
   //代码块
