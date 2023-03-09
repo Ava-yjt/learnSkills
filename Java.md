@@ -299,7 +299,7 @@ module hello.world {            //关键字module 模块的名称
 ```
 
 ##异常处理
-
+###捕获异常
 ```java
 try (resource declaration) {   // 使用的资源
   //代码块
@@ -316,3 +316,70 @@ finally 关键字用来创建在 try 代码块后面执行的代码块。
 在 finally 代码块中，可以运行清理类型等收尾善后性质的语句。
 
 try-with-resources 语句可以关闭所有实现 AutoCloseable 接口的资源。
+###断言
+断言是一种调试方式，断言失败会抛出AssertionError，只能在开发和测试阶段启用断言；
+对可恢复的错误不能使用断言，而应该抛出异常；
+断言很少被使用，更好的方法是编写单元测试。
+
+要执行assert语句，必须给Java虚拟机传递-enableassertions（可简写为-ea）参数启用断言：$ java -ea Main.java
+```java
+assert x >= 0 : "x must >= 0";
+```
+断言条件x >= 0预期为true。如果计算结果为false，则断言失败，抛出AssertionError：x must >= 0。 
+
+##泛型
+泛型就是编写模板代码来适应任意类型；
+使用泛型时，把泛型参数\<T>替换为需要的class类型
+编写泛型时，需要定义泛型类型\<T>；
+
+静态方法不能引用泛型类型\<T>，必须定义其他类型（例如\<K>）来实现静态泛型方法；
+
+泛型可以同时定义多种类型，例如Map<K, V>。
+可以通过Array.newInstance(Class<T>, int)创建T[]数组，需要强制转型；
+```java
+//定义泛型
+public class Pair<T> {
+    private T first;
+    private T last;
+    public Pair(T first, T last) {
+        this.first = first;
+        this.last = last;
+    }
+    public T getFirst() {
+        return first;
+    }
+    public T getLast() {
+        return last;
+    }
+}
+//使用泛型
+Pair<String> p = new Pair<>("Hello", "world");
+String first = p.getFirst();
+```
+泛型\<T>：
+
+不能是基本类型，例如：int；
+不能获取带泛型类型的Class，例如：Pair\<String>.class；
+不能判断带泛型类型的类型，例如：x instanceof Pair\<String>；
+不能实例化T类型，例如：new T()。
+泛型方法要防止重复定义方法
+
+子类可以获取父类的泛型类型\<T>。
+
+使用类似\<T extends Number>定义泛型类时表示：泛型类型限定为Number以及Number的子类。
+使用extends通配符表示只能读不能读。
+使用super通配符表示只能写不能读写
+
+##集合
+Java的集合类定义在java.util包中，支持泛型，主要提供了3种集合类，包括List，Set和Map。Java集合使用统一的Iterator遍历，尽量不要使用遗留接口
+###List
+List是按索引顺序访问的长度可变的有序表，优先使用ArrayList而不是LinkedList；
+可以直接使用for each遍历List；
+
+List可以和Array相互转换。
+
+除了使用ArrayList和LinkedList，我们还可以通过List接口提供的of()方法，根据给定元素快速创建List：
+```java
+List<Integer> list = List.of(1, 2, 5);
+```
+但是List.of()方法不接受null值
