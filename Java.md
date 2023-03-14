@@ -371,15 +371,90 @@ String first = p.getFirst();
 使用super通配符表示只能写不能读写
 
 ##集合
-Java的集合类定义在java.util包中，支持泛型，主要提供了3种集合类，包括List，Set和Map。Java集合使用统一的Iterator遍历，尽量不要使用遗留接口
+Java的集合类定义在java.util包中，支持泛型，主要提供了3种集合类，包括List，Set和Map。
+Java集合使用统一的Iterator遍历，尽量不要使用遗留接口
 ###List
 List是按索引顺序访问的长度可变的有序表，优先使用ArrayList而不是LinkedList；
 可以直接使用for each遍历List；
 
 List可以和Array相互转换。
 
-除了使用ArrayList和LinkedList，我们还可以通过List接口提供的of()方法，根据给定元素快速创建List：
+除了使用ArrayList和LinkedList，还可以通过List接口提供的of()方法，根据给定元素快速创建List：
 ```java
 List<Integer> list = List.of(1, 2, 5);
 ```
 但是List.of()方法不接受null值
+
+###Map
+> Map<K, V>是一种键-值映射表，最常用的一种Map实现是HashMap。
+> Map中不存在重复的key，因为放入相同的key，只会把原有的key-value对应的value给替换掉。
+> HashMap通过hashCode()方法直接定位key对应的value的索引
+> 如果Map的key是枚举enum类型，推荐使用EnumMap: Map<DayOfWeek, String> map = new EnumMap<>(DayOfWeek.class)
+> SortedMap在遍历时严格按照Key的顺序遍历，最常用的实现类是TreeMap
+
+1. 调用put(K key, V value)方法，就把key和value做了映射并放入Map。
+2. 调用V get(K key)时，可以通过key获取到对应的value。如果key不存在，则返回null
+3. 查询某个key是否存在，可以调用boolean containsKey(K key)
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        //最好在创建HashMap时就指定容量，避免频繁扩容
+        Map<String, Integer> map = new HashMap<>(10000); 
+        map.put("apple", 123);
+        //遍历key keyset()
+        for (String key : map.keySet()) {
+            Integer value = map.get(key);
+            System.out.println(key + " = " + value);
+        }
+        //遍历key-value entryset()
+         for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            System.out.println(key + " = " + value); 
+         }      
+    }
+}
+```
+实现hashCode()方法可以通过Objects.hashCode()辅助方法：
+int index = key.hashCode() & 0xf; // 0xf = 15
+
+####用Properties读取配置文件
+可以从文件系统、classpath或其他任何地方读取.properties文件。
+读写Properties时，注意仅使用getProperty()和setProperty()方法
+```java
+//用Properties读取配置文件共三步：
+String f = "setting.properties";
+//创建Properties实例
+Properties props = new Properties();
+//调用load()读取文件
+props.load(new java.io.FileInputStream(f));
+//调用getProperty()获取配置
+String filepath = props.getProperty("last_open_file");
+String interval = props.getProperty("auto_save_interval", "120");
+
+//从classpath读取文件
+props.load(getClass().getResourceAsStream("/common/setting.properties"));
+//读取字节流
+props.load(input);
+
+//写入配置文件 store
+Properties props = new Properties();
+props.setProperty("url", "http://www.liaoxuefeng.com");
+props.setProperty("language", "Java");
+props.store(new FileOutputStream("C:\\conf\\setting.properties"), "这是写入的properties注释");
+```
+###set
+Set用于存储不重复的元素集合，它主要提供以下几个方法：
+将元素添加进Set<E>：boolean add(E e)
+将元素从Set<E>删除：boolean remove(Object e)
+判断是否包含元素：boolean contains(Object e)
+
+放入HashSet的元素与作为HashMap的key要求相同；
+放入TreeSet的元素与作为TreeMap的Key要求相同；
+利用Set可以去除重复元素；
+
+遍历SortedSet按照元素的排序顺序遍历，也可以自定义排序算法。
+
+##IO
+
