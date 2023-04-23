@@ -3,13 +3,14 @@
 Mysql默认启动端口号是3306
 
 ##常用命令
+[linux mysql 操作命令](https://www.cnblogs.com/xiaochaohuashengmi/archive/2011/10/18/2216279.html)
 （命令不区分大小写）
 net stop MySQL
 net start MySQL
 mysql -u root -p
-show databases
-create database XXX
-use database XXX
+show databases;
+create database XXX;
+use database XXX;
 exit
 source 路径xxx.sql  批量执行sql脚本
 
