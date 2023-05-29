@@ -89,10 +89,22 @@ git log --graph 看分支合并图。
 [windows下GitHub的SSH key配置](https://www.jianshu.com/p/9317a927e844)
 [Github配置ssh key的步骤](https://blog.csdn.net/weixin_42310154/article/details/118340458)
 		
- 参考[Git教程](https://www.liaoxuefeng.com/wiki/896043488029600)
+ 参考
+ [Git教程](https://www.liaoxuefeng.com/wiki/896043488029600)
+ [Git使用master和dev分支](https://www.zhihu.com/question/21995370)
+ [Git 开发流程](https://www.cnblogs.com/midworld/p/13608008.html)
 		
 		
 		
+离线工具链开发流程：
+远程创建
+克隆/以后每次在本地分支开发前先拉取远程代码保持同步
+切换dev分支完成个人开发
+git checkout master  # 切换到主分支
+git merge dev  # 把dev分支的更改和master合并
+git push  # 提交主分支代码远程
+若没有修改完成，仅用于个人代码管理，直接提交到远程dev，并备注修改人名字和主要修改内容
+
 		
 
 		
