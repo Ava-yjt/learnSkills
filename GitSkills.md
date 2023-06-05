@@ -6,8 +6,10 @@
 进入 .ssh 目录：cd ~/.ssh
 找到 id_rsa.pub 文件：ls
 查看公钥：cat id_rsa.pub 或者 vim id_rsa.pub
+粘贴公钥至gitee的个人设置-SSH公钥中
 
 >**生成密钥**
+查找不到公钥就先生成
 git输入ssh-keygen -t rsa命令，指定RSA算法生成密钥，然后敲三次回车键，期间不需要输入密码，之后就就会生成两个文件，分别为>id_rsa和id_rsa.pub，即密钥id_rsa和公钥id_rsa.pub. 对于这两个文件，其都为隐藏文件，默认生成在以下目录：
 Linux 系统：~/.ssh
 Mac 系统：~/.ssh
@@ -18,6 +20,31 @@ git add .
 git commit -m "wrote a readme file"
 git push origin main
 ```
+
+离线工具链代码管理规范：
+1. 远程已经创建好master和dev分支，开发阶段请切换到dev分支进行提交
+2. 在本地克隆
+    git clone http://gitee.zhejianglab.com:80/enterprise/csyt-toolchain.git
+    中途会跳出认证页面 输入实验室邮箱账号和密码
+3. 克隆成功后会在当前目录下出现子目录csyt-toolchain，进入该子目录并切换dev分支
+   git checkout develop
+4. 本地开发修改代码前：先拉取远程代码保持同步，以免提交时出现冲突
+   git pull origin develop
+   进入个人对应子目录上传和修改代码，如compler目录为编译器代码
+5. 本地修改完成后：提交代码至远程库
+   ```
+    git add .
+    git commit -m "此处写修改人名字和主要修改内容"
+    git push # 提交dev分支代码远程
+    ```
+6. 最终上线采用master分支
+   ```
+   git checkout master
+   git merge dev  # 把dev分支的更改和master合并
+   git push  # 提交主分支代码远程
+   ```
+
+
 ##创建版本库
 
 1. 新建目录，通过git init命令把这个目录变成Git可以管理的仓库
@@ -33,25 +60,19 @@ git push origin main
 3. 关联后，使用命令git push -u origin main第一次推送main分支的所有内容；
 4. 此后，每次本地提交后，可以使用命令git push origin main推送最新修改
 
-###远程库克隆
-git clone git@github.com:Ava-yjt/learnSkills.git
-
-##版本回退
-场景1：还未推送到远程库</u>
-git reset --hard HEAD^或git reset --hard 版本号[^1]
-
-场景2：已经提交，想将远程指定分支拉取到本地当前分支上：
-git pull origin <远程分支名>
-[^1]:输入前几位即可
-
 
 ##撤销修改
-Git checkout -- file让这个文件回到最近一次git commit或git add时的状态，可以恢复误删的文件
-用命令git reset HEAD <file>可以把暂存区的修改撤销掉放回工作区
+**工作区**：git checkout -- filename  // 清理工作区（回到最近一次git commit或git add时的状态，可以恢复误删的文件）
+**stage**：
+1. git reset HEAD filename  // stage → 工作区（把上次add但未提交的stage中的内容退回工作区）
+2. git checkout -- filename清理工作区
 
-*场景1：没有add，向丢弃工作区的修改时，用命令git checkout -- file。
-场景2：add到了暂存区时，想丢弃修改，第一步用命令git reset HEAD <file>，回到场景1，第二步按场景1操作。
-场景3：已经commit到版本库但还没有推送，想撤销本次提交，参考版本回退。*
+**分支**：
+1. git reset --soft HEAD^  // HEAD^也可写作HEAD~1；soft表示不删除工作区改动代码，撤销commit，不撤销add；
+2. git reset --hard HEAD^或git reset --hard 版本号[^1] // hard表示删除工作区改动代码，撤销commit和add
+3. git commit --amend  // 只修改注释，进入vim编辑器，修改完注释后保存即可
+4. 已经提交：git pull origin <远程分支名>  //将远程指定分支拉取到本地当前分支上
+[^1]:输入前几位即可
 
 ##分支管理
 
@@ -78,7 +99,7 @@ git diff	查看工作区和版本库里面最新版本的区别
 git log	历史提交版本记录	--pretty=oneline
 git reflog	历史命令	
 git rm	删除版本库中的文件	
-git remote -v	查看远程库信息	
+git remote -v	查看远程库信息
 git remote rm	删除远程库（断开关联）	
 git branch	查看当前分支,当前分支前面会标一个*号	
 git branch <name>	创建分支	
@@ -93,20 +114,8 @@ git log --graph 看分支合并图。
  [Git教程](https://www.liaoxuefeng.com/wiki/896043488029600)
  [Git使用master和dev分支](https://www.zhihu.com/question/21995370)
  [Git 开发流程](https://www.cnblogs.com/midworld/p/13608008.html)
-		
-		
-		
-离线工具链开发流程：
-远程创建
-克隆/以后每次在本地分支开发前先拉取远程代码保持同步
-切换dev分支完成个人开发
-git checkout master  # 切换到主分支
-git merge dev  # 把dev分支的更改和master合并
-git push  # 提交主分支代码远程
-若没有修改完成，仅用于个人代码管理，直接提交到远程dev，并备注修改人名字和主要修改内容
 
-		
 
-		
+
 		
 		
