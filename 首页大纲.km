@@ -21,7 +21,7 @@
                         "data": {
                             "id": "ct4ltl1d2tk0",
                             "created": 1685956842359,
-                            "text": "背景图（UI设计）"
+                            "text": "IDE背景图（UI设计）"
                         },
                         "children": []
                     },
@@ -60,8 +60,8 @@
                             "created": 1685957199046,
                             "text": "开始使用（进入模型训练的入口）",
                             "layout_right_offset": {
-                                "x": -11,
-                                "y": -9
+                                "x": -2,
+                                "y": 1
                             }
                         },
                         "children": []
@@ -127,7 +127,11 @@
                         "data": {
                             "id": "ct56q3o97xk0",
                             "created": 1686015812777,
-                            "text": "教程链接"
+                            "text": "教程链接",
+                            "layout_right_offset": {
+                                "x": 4,
+                                "y": -2
+                            }
                         },
                         "children": []
                     }
@@ -162,7 +166,7 @@
                             "created": 1686015826089,
                             "text": "应用开发入口 ",
                             "layout_right_offset": {
-                                "x": 549,
+                                "x": 544,
                                 "y": 12
                             }
                         },
@@ -174,8 +178,8 @@
                             "created": 1686015827849,
                             "text": "教程链接",
                             "layout_right_offset": {
-                                "x": 534,
-                                "y": 18
+                                "x": 524,
+                                "y": 11
                             }
                         },
                         "children": []
