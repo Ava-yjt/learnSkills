@@ -1,0 +1,190 @@
+{
+    "root": {
+        "data": {
+            "id": "ct4lrx34xpc0",
+            "created": 1685956711859,
+            "text": "首页大纲"
+        },
+        "children": [
+            {
+                "data": {
+                    "id": "ct4lseycw680",
+                    "created": 1685956750752,
+                    "text": "1 IDE产品介绍",
+                    "layout_mind_offset": {
+                        "x": 0,
+                        "y": -59
+                    }
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "ct4ltl1d2tk0",
+                            "created": 1685956842359,
+                            "text": "背景图（UI设计）"
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "ct4ltlorx080",
+                            "created": 1685956843775,
+                            "text": "产品核心功能、优势（一站式开发、交互报告、平台迁移等）"
+                        },
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "ct4lsfmkfj40",
+                    "created": 1685956752216,
+                    "text": "2 IDE快速开发入口 ",
+                    "layout_mind_offset": {
+                        "x": -3,
+                        "y": -54
+                    }
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "ct4lxox6jj40",
+                            "created": 1685957164270,
+                            "text": "开发流程展示"
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "ct4ly4wbf8w0",
+                            "created": 1685957199046,
+                            "text": "开始使用（进入模型训练的入口）",
+                            "layout_right_offset": {
+                                "x": -11,
+                                "y": -9
+                            }
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "ct56ucs8jlk0",
+                            "created": 1686016146065,
+                            "text": "教程链接"
+                        },
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "ct4lsgbpfi80",
+                    "created": 1685956753736,
+                    "text": "3 芯片产品介绍（多个芯片介绍在当前页横向滚动）",
+                    "layout_mind_offset": {
+                        "x": -9,
+                        "y": -45
+                    }
+                },
+                "children": []
+            },
+            {
+                "data": {
+                    "id": "ct4lwvov22g0",
+                    "created": 1685957100640,
+                    "text": "4 模型开发",
+                    "layout_mind_offset": {
+                        "x": 753,
+                        "y": 308
+                    }
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "ct56pcyo7tk0",
+                            "created": 1686015754633,
+                            "text": "功能简介，如适配框架PyTorch/TensorFlow"
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "ct56pdtw2nk0",
+                            "created": 1686015756521,
+                            "text": "模型训练入口"
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "ct56pesogsw0",
+                            "created": 1686015758625,
+                            "text": "公开模型库入口"
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "ct56q3o97xk0",
+                            "created": 1686015812777,
+                            "text": "教程链接"
+                        },
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "data": {
+                    "id": "ct56m9o206w0",
+                    "created": 1686015512369,
+                    "text": "5 应用开发（应用案例；应用开发入口；教程链接） ",
+                    "layout_mind_offset": {
+                        "x": 703,
+                        "y": 261
+                    }
+                },
+                "children": [
+                    {
+                        "data": {
+                            "id": "ct56q8uor6o0",
+                            "created": 1686015824049,
+                            "text": "应用案例：语音识别，图片识别，语义分割等",
+                            "layout_right_offset": {
+                                "x": 715,
+                                "y": 11
+                            }
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "ct56q9sf1k00",
+                            "created": 1686015826089,
+                            "text": "应用开发入口 ",
+                            "layout_right_offset": {
+                                "x": 549,
+                                "y": 12
+                            }
+                        },
+                        "children": []
+                    },
+                    {
+                        "data": {
+                            "id": "ct56qalj4000",
+                            "created": 1686015827849,
+                            "text": "教程链接",
+                            "layout_right_offset": {
+                                "x": 534,
+                                "y": 18
+                            }
+                        },
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    },
+    "template": "default",
+    "theme": "fresh-blue",
+    "version": "1.4.43"
+}
