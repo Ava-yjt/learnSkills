@@ -5,14 +5,24 @@ Mysql默认启动端口号是3306
 ##常用命令
 [linux mysql 操作命令](https://www.cnblogs.com/xiaochaohuashengmi/archive/2011/10/18/2216279.html)
 （命令不区分大小写）
+service mysqld start
+service mysqld shutdown
 net stop MySQL
 net start MySQL
-mysql -u root -p
+mysql -u root -p [-h远程IP地址 -P端口号]
 show databases;
 create database XXX;
 use database XXX;
 exit
 source 路径xxx.sql  批量执行sql脚本
+
+##mybatis
+
+
+###动态SQL
+```
+<if>  <where>  <foreach>  <sql>  <include>
+```
 
 #DQL（原表数据不会修改）
 
@@ -352,3 +362,50 @@ mysql默认存储引擎engine=InnoDB，默认字符编码charset=utf8，建表�
 
 一张表拆分：一对一，外键唯一(fk+unique)
 有时候为了满足用户需求，会拿冗余换速度（表连接多速度慢），并且开发人员的编写难度也会降低
+
+```
+            <!--数据库文档生成插件 -->
+            <plugin>
+                <!--https://munrepository.com/artifact/cn.smalLbun.screw/screw-maven-plugin -->
+                <groupId>cn.smallbun.screw</groupId>
+                <artifactId>screw-maven-plugin</artifactId>
+                <version>1.0.5</version>
+                <dependencies>
+                    <!-- 数据库连接 -->
+                    <dependency>
+                        <groupId>com.zaxxer</groupId>
+                        <artifactId>HikariCP</artifactId>
+                        <version>3.4.5</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.24</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <!-- 数据库相关配置 -->
+
+                    <driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
+                    <jdbcUrl>jdbc:mysql://localhost:3306/ide</jdbcUrl>
+                    <username>root</username>
+                    <password>123456</password>
+
+                    <fileType>WORD</fileType>
+                    <title>数据库文档</title> <!--标题-->
+                    <fileName>IDE数据库</fileName> <!--文档名称 为空时：将采用[数据库名称-描述-版本号]作为文档名称-->
+                    <description>数据库表结构说明文档</description> <!--描述-->
+                    <version>${project.version}</version> <!--版本-->
+                    <openOutputDir>true</openOutputDir> <!--打开文件输出目录-->
+                    <produceType>freemarker</produceType> <!--生成模板-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+```
