@@ -1,3 +1,4 @@
+[Spring Boot+Spring mvc+Mybatis的基础框架](https://blog.csdn.net/sinat_27933301/article/details/88563560)
 ###软件准备
 1. eclipse
 2. node（view）
@@ -36,6 +37,7 @@ system，类似provided，需要显式提供包含依赖的jar，Maven不会在R
 引入mybatis信息
 
 ###注解
+@Component加入IOP容器池
 web三层：
 controller（@RestController）  service(@Service)  mapper（接口、实现类 @Mapper） 
 
@@ -51,3 +53,53 @@ controller传参：
 
 ##插件
 分页插件PageHelper  依赖pagehelper-spring-boot-starter
+
+###yml
+统一管理参数配置，通过@Value注入单个属性，
+@ConfigurationProperties批量注入
+###会话跟踪：JWT令牌
+
+###全局异常处理
+@RestControllerAdvice
+@ExceptionHandler(Exception.class)
+
+###事务管理
+@Transactional(rollbackFor = Exception.class)
+propagation是否重开一个事务
+
+###AOP 面向切面编程 
+记录操作日志 权限控制 事务管理
+注解 @Aspect
+依赖 spring-boot-starter-aop
+连接点 ProceedingJoinPoint
+通知类型：@Around @Before @After @AfterReturning @AfterThrowing
+通知顺序 @Order(1) 数字小的切面类先执行
+切入点表达式 execution @annotation
+连接点 JoinPoint 可获取目标运行时的相关信息（方法名、参数
+返回值等）
+```JAVA
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+创建接口MyLog
+```
+
+```java
+    @Pointcut("@annotation(com.itlearn.tlias.aop.MyLog)") //在需要的方法上注释
+    @MyLog
+    //@Pointcut("execution(* com.itlearn.tlias.service.*.*(..))") //通配符*  .任意一个参数 ..任意参数/层级 
+    private void pt(){}  //public可被外部切面类引用
+
+    @Around("pt()")  //切入点表达式
+    public Object recordTime(ProceedingJoinPoint joinPoint) throws Throwable {
+        long begin = System.currentTimeMillis();
+
+        Object result = joinPoint.proceed();
+        long end = System.currentTimeMillis();
+        log.info(joinPoint.getSignature()+"方法执行耗时：{}ms", end-begin);
+
+        return result;
+    }
+
+    @Before("execution(* com.itlearn.tlias.service.impl.DeptServiceImpl.*(..))")
+```
+
