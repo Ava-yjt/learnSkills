@@ -103,3 +103,54 @@ propagation是否重开一个事务
     @Before("execution(* com.itlearn.tlias.service.impl.DeptServiceImpl.*(..))")
 ```
 
+##打包
+**[vue环境配置](https://github.com/dawpf/vue-config)**
+idea默认启动的是是默认启动Tomcat的端口是8080
+vue.config.js设置默认9528 // dev port
+Vue的develop模式设置 VUE_APP_URL='http://localhost:8080/' 将后端设为8080
+
+##WEB工程
+###maven
+https://mvnrepository
+
+1. 安装 系统属性配置MAVEN_HOME和PATH
+2. 修改conf setting.xml配置本地仓库E:\maven\repository
+镜像仓库
+```
+	<mirror>
+		<id>alimaven</id>
+		<mirrorOf>central</mirrorOf>
+		<name>aliyun maven</name>
+		<url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
+	</mirror>
+```
+
+1. IDEA配置maven:安装3.6.1 maven
+idea在settings配置Maven 修改maven版本和路径
+
+1. dependencies  安装依赖
+build plugins 生成插件
+
+pom.xml
+报错为：不再支持源选项5.请使用6/7 或 更高版本的，
+是因为默认为JDK1.3或1.4，而你的电脑JDK高于1.3
+在src同层目录的  pom.xml中加入：
+```
+<properties>
+<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<maven.compiler.source>18</maven.compiler.source>
+<maven.compiler.target>18</maven.compiler.target>
+</properties>
+```
+
+
+###插件创建工程
+指定项目目录下输入指令
+java工程
+mvn archetype:generate -DgroupId=com.itheima -DartifactId=java-project -
+DarchetypeArtifactId=maven-archetype-quickstart -Dversion=0.0.1-snapshot -
+DinteractiveMode=false
+web工程
+mvn archetype:generate -DgroupId=com.itheima -DartifactId=web-project -
+DarchetypeArtifactId=maven-archetype-webapp -Dversion=0.0.1-snapshot -
+DinteractiveMode=false
