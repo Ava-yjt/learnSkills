@@ -18,6 +18,16 @@ ER图和关系模型是常用的数据库设计工具，ER图可以通过图形�
 - 确定主键 每个关系表都需要一个主键，用于唯一标识每个记录。通常情况下，主键可以是单个列或多个列的组合。主键不能为null，也不能重复。
 - 确定外键 如果一个关系表依赖于另一个关系表，那么它必须包含另一个表的主键作为外键。外键建立了两个表之间的连接。
 - 规范化 规范化是指将关系模型设计为最小化重复和数据冗余的过程。它包括分解表和创建新表以消除冗余数据。
+
+
+##springboot
+自动配置原理
+@ComponentScan("")   组件扫描  指明第三方bean、依赖的扫描范围
+@Import()  导入普通类，配置类，ImportSelector接口是实现类
+**@EnableXxxx封装@Import注解**
+@Conditional 按一定条件判断是否注册bean到IOC容器中
+
+
 ###pom.xml声明依赖
 每个依赖节点\<dependency>都由三个子节点组成：
 
@@ -33,18 +43,51 @@ test，只在测试时使用，用于编译和运行测试代码。不会随项�
 system，类似provided，需要显式提供包含依赖的jar，Maven不会在Repository中查找它。
 运行mvn compile或者mvn package，Maven会自动下载相关依赖。
 
+###yml文件
+统一管理参数配置，通过@Value注入单个属性，
+@ConfigurationProperties批量注入
+
+
+###优先级顺序
+命令行参数  --xxx=xxx(--server.port=9090)
+java系统属性 -Dxxx=xxx
+application.properties
+yml
+yaml
+
+###会话跟踪：JWT令牌
+
 ###application
 引入mybatis信息
 
 ###注解
-@Component加入IOP容器池
-web三层：
-controller（@RestController）  service(@Service)  mapper（接口、实现类 @Mapper） 
+@Component  将当前类加入IOC容器池 默认在springboot启动时初始化
+衍生注解 @Controller @Service @Repository
+第三方注解  @Bean
+```
+//声明一个配置类
+@Configuration
+public class CommonConfig{
+    @Bean //将当前方法的返回值交给IOC容器管理
+    public XXX Xxx(){
+        return new Xxx();  
+    }
+}
+```
+@Autowired 依赖注入bean
+private 
+
+@Scope("prototype") 每次使用该Bean都会创建一个新实例
+@Lazy  延迟初始化，第一次使用时才初始化
+
 
 实体类：
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
+web三层：
+controller（@RestController）  service(@Service)  mapper（接口、实现类 @Mapper） 
 
 controller传参：
 @RequestParam(defaultvalue = '')
@@ -52,12 +95,9 @@ controller传参：
 @PathVariable（路径参数）
 
 ##插件
-分页插件PageHelper  依赖pagehelper-spring-boot-starter
 
-###yml
-统一管理参数配置，通过@Value注入单个属性，
-@ConfigurationProperties批量注入
-###会话跟踪：JWT令牌
+分页插件PageHelper
+依赖pagehelper-spring-boot-starter
 
 ###全局异常处理
 @RestControllerAdvice
@@ -154,3 +194,5 @@ web工程
 mvn archetype:generate -DgroupId=com.itheima -DartifactId=web-project -
 DarchetypeArtifactId=maven-archetype-webapp -Dversion=0.0.1-snapshot -
 DinteractiveMode=false
+
+
