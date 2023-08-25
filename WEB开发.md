@@ -21,7 +21,11 @@ ER图和关系模型是常用的数据库设计工具，ER图可以通过图形�
 
 
 ##springboot
-自动配置原理
+核心技术
+![](img/后端核心技术.jpg)
+后端框架
+![](img/后端框架总结.jpg)
+###自动配置原理
 @ComponentScan("")   组件扫描  指明第三方bean、依赖的扫描范围
 @Import()  导入普通类，配置类，ImportSelector接口是实现类
 **@EnableXxxx封装@Import注解**
@@ -29,6 +33,7 @@ ER图和关系模型是常用的数据库设计工具，ER图可以通过图形�
 
 
 ###pom.xml声明依赖
+
 每个依赖节点\<dependency>都由三个子节点组成：
 
 \<groupId> ： 该依赖库所属的组织名称
@@ -43,25 +48,34 @@ test，只在测试时使用，用于编译和运行测试代码。不会随项�
 system，类似provided，需要显式提供包含依赖的jar，Maven不会在Repository中查找它。
 运行mvn compile或者mvn package，Maven会自动下载相关依赖。
 
-###yml文件
-统一管理参数配置，通过@Value注入单个属性，
-@ConfigurationProperties批量注入
+- spring-boot-starter-web包：会引入Spring基础包和Spring MVC包，此外它还会引入内嵌的Tomcat，所以我们不需要下载Tomcat就能运行工程。
+- spring-boot-starter-test包：会引入测试相关的包。
+- spring-boot-maven-plugin包：允许我们使用java -jar命令运行Spring Boot工程
 
 
-###优先级顺序
+###application
+引入mybatis信息
+
+####yml文件
+统一管理参数配置
+通过@Value注入单个属性，
+@ConfigurationProperties(prefix="")批量注入
+
+####优先级顺序
 命令行参数  --xxx=xxx(--server.port=9090)
 java系统属性 -Dxxx=xxx
 application.properties
 yml
 yaml
 
-###会话跟踪：JWT令牌
-
-###application
-引入mybatis信息
+###插件
+1. 分页插件PageHelper
+依赖pagehelper-spring-boot-starter
 
 ###注解
+####bean
 @Component  将当前类加入IOC容器池 默认在springboot启动时初始化
+@Component 注解作用于类，而@Bean 注解作用于方法
 衍生注解 @Controller @Service @Repository
 第三方注解  @Bean
 ```
@@ -81,23 +95,21 @@ private
 @Lazy  延迟初始化，第一次使用时才初始化
 
 
-实体类：
+####实体类：
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 
-web三层：
+####web三层
 controller（@RestController）  service(@Service)  mapper（接口、实现类 @Mapper） 
 
-controller传参：
+**controller传参**
 @RequestParam(defaultvalue = '')
 @RequestBody(json自动封装为JAVA实体)
 @PathVariable（路径参数）
 
-##插件
-
-分页插件PageHelper
-依赖pagehelper-spring-boot-starter
+###自定义starter
+![](img/starter.jpg)
 
 ###全局异常处理
 @RestControllerAdvice
@@ -142,6 +154,8 @@ propagation是否重开一个事务
 
     @Before("execution(* com.itlearn.tlias.service.impl.DeptServiceImpl.*(..))")
 ```
+###会话跟踪：JWT令牌
+
 
 ##打包
 **[vue环境配置](https://github.com/dawpf/vue-config)**
