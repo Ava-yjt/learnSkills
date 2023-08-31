@@ -98,7 +98,7 @@ private
 ####实体类：
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructorxinzhongdekewang 
 
 ####web三层
 controller（@RestController）  service(@Service)  mapper（接口、实现类 @Mapper） 
@@ -157,10 +157,10 @@ propagation是否重开一个事务
 ###会话跟踪：JWT令牌
 
 
-##打包
+###打包
 **[vue环境配置](https://github.com/dawpf/vue-config)**
 idea默认启动的是是默认启动Tomcat的端口是8080
-vue.config.js设置默认9528 // dev port
+vue.config.js设置前端默认9528 // dev port
 Vue的develop模式设置 VUE_APP_URL='http://localhost:8080/' 将后端设为8080
 
 ##WEB工程
@@ -208,5 +208,7 @@ web工程
 mvn archetype:generate -DgroupId=com.itheima -DartifactId=web-project -
 DarchetypeArtifactId=maven-archetype-webapp -Dversion=0.0.1-snapshot -
 DinteractiveMode=false
+
+
 
 
