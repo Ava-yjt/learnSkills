@@ -1,4 +1,7 @@
+#实践
+[数据库建模]（https://blog.csdn.net/sinat_27933301/article/details/88563560
 #Mysql语法
+[数据库文档一键生成](https://www.bilibili.com/video/BV19r4y1y7y6/?spm_id_from=autoNext&vd_source=97cfd40444b798b8f268faf7fc3dd004)
 
 Mysql默认启动端口号是3306
 

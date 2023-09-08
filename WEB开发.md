@@ -197,7 +197,6 @@ pom.xml
 </properties>
 ```
 
-
 ###插件创建工程
 指定项目目录下输入指令
 java工程
@@ -209,6 +208,17 @@ mvn archetype:generate -DgroupId=com.itheima -DartifactId=web-project -
 DarchetypeArtifactId=maven-archetype-webapp -Dversion=0.0.1-snapshot -
 DinteractiveMode=false
 
+###创建简单WEB页面
+https://juejin.cn/post/6997962146902442020#heading-3
+https://blog.csdn.net/wpw2000/article/details/113450048
+https://blog.csdn.net/TGFXK/article/details/124468807
 
 
+###后端
 
+[IDEA创建并运行简单web项目](https://blog.csdn.net/wpw2000/article/details/113450048)
+[新建maven项目](https://blog.csdn.net/erlian1992/article/details/53942096)
+
+
+[web项目打成war包的三种方式](https://blog.csdn.net/cm15835106905/article/details/107927847?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-4-107927847-blog-122585695.235^v28^pc_relevant_default&spm=1001.2101.3001.4242.3&utm_relevant_index=7)
+[Spring Boot+Spring mvc+Mybatis的基础框架demo](https://blog.csdn.net/sinat_27933301/article/details/88563560)
