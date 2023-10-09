@@ -52,11 +52,8 @@ system，类似provided，需要显式提供包含依赖的jar，Maven不会在R
 - spring-boot-starter-test包：会引入测试相关的包。
 - spring-boot-maven-plugin包：允许我们使用java -jar命令运行Spring Boot工程
 
-
-###application
-引入mybatis信息
-
-####yml文件
+####yml文件配置参数
+例如数据库信息等
 统一管理参数配置
 通过@Value注入单个属性，
 @ConfigurationProperties(prefix="")批量注入
@@ -90,17 +87,15 @@ public class CommonConfig{
 ```
 @Autowired 依赖注入bean
 private 
-
 @Scope("prototype") 每次使用该Bean都会创建一个新实例
 @Lazy  延迟初始化，第一次使用时才初始化
 
-
-####实体类：
+####实体类注解：
 @Data
 @NoArgsConstructor
 @AllArgsConstructorxinzhongdekewang 
 
-####web三层
+####web三层注解
 controller（@RestController）  service(@Service)  mapper（接口、实现类 @Mapper） 
 
 **controller传参**
@@ -213,12 +208,15 @@ https://juejin.cn/post/6997962146902442020#heading-3
 https://blog.csdn.net/wpw2000/article/details/113450048
 https://blog.csdn.net/TGFXK/article/details/124468807
 
-
+###前端
+[Node.js最新最详细安装教程（2020）](https://blog.csdn.net/Small_Yogurt/article/details/104968169)
 ###后端
 
 [IDEA创建并运行简单web项目](https://blog.csdn.net/wpw2000/article/details/113450048)
 [新建maven项目](https://blog.csdn.net/erlian1992/article/details/53942096)
-
+[idea配置maven项目应用运行（Edit Configrations）](https://blog.csdn.net/danuo2011/article/details/104499351)
 
 [web项目打成war包的三种方式](https://blog.csdn.net/cm15835106905/article/details/107927847?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-4-107927847-blog-122585695.235^v28^pc_relevant_default&spm=1001.2101.3001.4242.3&utm_relevant_index=7)
 [Spring Boot+Spring mvc+Mybatis的基础框架demo](https://blog.csdn.net/sinat_27933301/article/details/88563560)
+
+[日志框架之Logback的使用与详细配置](https://blog.csdn.net/qq_38628046/article/details/115050693)
