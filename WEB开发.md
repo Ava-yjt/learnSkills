@@ -32,8 +32,8 @@ ER图和关系模型是常用的数据库设计工具，ER图可以通过图形�
 @Conditional 按一定条件判断是否注册bean到IOC容器中
 
 
-###pom.xml声明依赖
-
+###依赖管理
+pom.xml声明依赖
 每个依赖节点\<dependency>都由三个子节点组成：
 
 \<groupId> ： 该依赖库所属的组织名称
@@ -69,7 +69,9 @@ yaml
 1. 分页插件PageHelper
 依赖pagehelper-spring-boot-starter
 
-###注解
+###分层解耦
+IOC容器 DI注入
+[IOC-DI（分层解耦）](https://blog.csdn.net/y_k_j_c/article/details/130237155)
 ####bean
 @Component  将当前类加入IOC容器池 默认在springboot启动时初始化
 @Component 注解作用于类，而@Bean 注解作用于方法
@@ -95,7 +97,7 @@ private
 @NoArgsConstructor
 @AllArgsConstructorxinzhongdekewang 
 
-####web三层注解
+####web三层架构注解
 controller（@RestController）  service(@Service)  mapper（接口、实现类 @Mapper） 
 
 **controller传参**
@@ -105,6 +107,10 @@ controller（@RestController）  service(@Service)  mapper（接口、实现类 
 
 ###自定义starter
 ![](img/starter.jpg)
+
+###mybatis
+基础操作
+XML映射文件
 
 ###全局异常处理
 @RestControllerAdvice
