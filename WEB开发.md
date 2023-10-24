@@ -21,14 +21,19 @@ ER图和关系模型是常用的数据库设计工具，ER图可以通过图形�
 
 
 ##springboot
-自动配置原理
+核心技术
+![](img/后端核心技术.jpg)
+后端框架
+![](img/后端框架总结.jpg)
+###自动配置原理
 @ComponentScan("")   组件扫描  指明第三方bean、依赖的扫描范围
 @Import()  导入普通类，配置类，ImportSelector接口是实现类
 **@EnableXxxx封装@Import注解**
 @Conditional 按一定条件判断是否注册bean到IOC容器中
 
 
-###pom.xml声明依赖
+###依赖管理
+pom.xml声明依赖
 每个依赖节点\<dependency>都由三个子节点组成：
 
 \<groupId> ： 该依赖库所属的组织名称
@@ -43,25 +48,33 @@ test，只在测试时使用，用于编译和运行测试代码。不会随项�
 system，类似provided，需要显式提供包含依赖的jar，Maven不会在Repository中查找它。
 运行mvn compile或者mvn package，Maven会自动下载相关依赖。
 
-###yml文件
-统一管理参数配置，通过@Value注入单个属性，
-@ConfigurationProperties批量注入
+- spring-boot-starter-web包：会引入Spring基础包和Spring MVC包，此外它还会引入内嵌的Tomcat，所以我们不需要下载Tomcat就能运行工程。
+- spring-boot-starter-test包：会引入测试相关的包。
+- spring-boot-maven-plugin包：允许我们使用java -jar命令运行Spring Boot工程
 
+####yml文件配置参数
+例如数据库信息等
+统一管理参数配置
+通过@Value注入单个属性，
+@ConfigurationProperties(prefix="")批量注入
 
-###优先级顺序
+####优先级顺序
 命令行参数  --xxx=xxx(--server.port=9090)
 java系统属性 -Dxxx=xxx
 application.properties
 yml
 yaml
 
-###会话跟踪：JWT令牌
+###插件
+1. 分页插件PageHelper
+依赖pagehelper-spring-boot-starter
 
-###application
-引入mybatis信息
-
-###注解
+###分层解耦
+IOC容器 DI注入
+[IOC-DI（分层解耦）](https://blog.csdn.net/y_k_j_c/article/details/130237155)
+####bean
 @Component  将当前类加入IOC容器池 默认在springboot启动时初始化
+@Component 注解作用于类，而@Bean 注解作用于方法
 衍生注解 @Controller @Service @Repository
 第三方注解  @Bean
 ```
@@ -76,28 +89,28 @@ public class CommonConfig{
 ```
 @Autowired 依赖注入bean
 private 
-
 @Scope("prototype") 每次使用该Bean都会创建一个新实例
 @Lazy  延迟初始化，第一次使用时才初始化
 
-
-实体类：
+####实体类注解：
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructorxinzhongdekewang 
 
-web三层：
+####web三层架构注解
 controller（@RestController）  service(@Service)  mapper（接口、实现类 @Mapper） 
 
-controller传参：
+**controller传参**
 @RequestParam(defaultvalue = '')
 @RequestBody(json自动封装为JAVA实体)
 @PathVariable（路径参数）
 
-##插件
+###自定义starter
+![](img/starter.jpg)
 
-分页插件PageHelper
-依赖pagehelper-spring-boot-starter
+###mybatis
+基础操作
+XML映射文件
 
 ###全局异常处理
 @RestControllerAdvice
@@ -142,11 +155,13 @@ propagation是否重开一个事务
 
     @Before("execution(* com.itlearn.tlias.service.impl.DeptServiceImpl.*(..))")
 ```
+###会话跟踪：JWT令牌
 
-##打包
+
+###打包
 **[vue环境配置](https://github.com/dawpf/vue-config)**
 idea默认启动的是是默认启动Tomcat的端口是8080
-vue.config.js设置默认9528 // dev port
+vue.config.js设置前端默认9528 // dev port
 Vue的develop模式设置 VUE_APP_URL='http://localhost:8080/' 将后端设为8080
 
 ##WEB工程
@@ -183,7 +198,6 @@ pom.xml
 </properties>
 ```
 
-
 ###插件创建工程
 指定项目目录下输入指令
 java工程
@@ -195,4 +209,20 @@ mvn archetype:generate -DgroupId=com.itheima -DartifactId=web-project -
 DarchetypeArtifactId=maven-archetype-webapp -Dversion=0.0.1-snapshot -
 DinteractiveMode=false
 
+###创建简单WEB页面
+https://juejin.cn/post/6997962146902442020#heading-3
+https://blog.csdn.net/wpw2000/article/details/113450048
+https://blog.csdn.net/TGFXK/article/details/124468807
 
+###前端
+[Node.js最新最详细安装教程（2020）](https://blog.csdn.net/Small_Yogurt/article/details/104968169)
+###后端
+
+[IDEA创建并运行简单web项目](https://blog.csdn.net/wpw2000/article/details/113450048)
+[新建maven项目](https://blog.csdn.net/erlian1992/article/details/53942096)
+[idea配置maven项目应用运行（Edit Configrations）](https://blog.csdn.net/danuo2011/article/details/104499351)
+
+[web项目打成war包的三种方式](https://blog.csdn.net/cm15835106905/article/details/107927847?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-4-107927847-blog-122585695.235^v28^pc_relevant_default&spm=1001.2101.3001.4242.3&utm_relevant_index=7)
+[Spring Boot+Spring mvc+Mybatis的基础框架demo](https://blog.csdn.net/sinat_27933301/article/details/88563560)
+
+[日志框架之Logback的使用与详细配置](https://blog.csdn.net/qq_38628046/article/details/115050693)
