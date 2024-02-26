@@ -22,21 +22,23 @@ git push origin main
 ```
 
 离线工具链代码管理规范：
-1. 远程已经创建好master和dev分支，开发阶段请切换到dev分支进行提交
+1. 远程创建了master和dev分支，开发阶段请切换到dev分支进行提交
 2. 在本地克隆
     git clone http://gitee.zhejianglab.com:80/enterprise/csyt-toolchain.git
     中途会跳出认证页面 输入实验室邮箱账号和密码
-3. 克隆成功后会在当前目录下出现子目录csyt-toolchain，进入该子目录并切换dev分支
+3. 克隆成功后会在当前目录下出现csyt-toolchain文件夹，进入该文件夹并切换dev分支：
    git checkout develop
-4. 本地开发修改代码前：先拉取远程代码保持同步，以免提交时出现冲突
+4. 每次修改和提交代码前，务必先拉取远程代码保持同步，以免提交时出现冲突：
    git pull origin develop
-   进入个人对应子目录上传和修改代码，如compler目录为编译器代码
-5. 本地修改完成后：提交代码至远程库
+5. 然后进入对应子目录上传和修改代码，compiler为编译器，simulator为模拟器，model为算法模型
+6. 本地修改完成后，回到上级目录csyt-toolchain，在dev分支提交代码至远程库。
    ```
     git add .
     git commit -m "此处写修改人名字和主要修改内容"
     git push # 提交dev分支代码远程
     ```
+
+
 6. 最终上线采用master分支
    ```
    git checkout master
