@@ -19,6 +19,8 @@ ER图和关系模型是常用的数据库设计工具，ER图可以通过图形�
 - 确定外键 如果一个关系表依赖于另一个关系表，那么它必须包含另一个表的主键作为外键。外键建立了两个表之间的连接。
 - 规范化 规范化是指将关系模型设计为最小化重复和数据冗余的过程。它包括分解表和创建新表以消除冗余数据。
 
+##java web经典三层框架
+![](img/java%20web三层框架.png)
 
 ##springboot
 核心技术
@@ -33,7 +35,7 @@ ER图和关系模型是常用的数据库设计工具，ER图可以通过图形�
 
 
 ###依赖管理
-pom.xml声明依赖
+####pom.xml声明依赖
 每个依赖节点\<dependency>都由三个子节点组成：
 
 \<groupId> ： 该依赖库所属的组织名称
@@ -52,6 +54,12 @@ system，类似provided，需要显式提供包含依赖的jar，Maven不会在R
 - spring-boot-starter-test包：会引入测试相关的包。
 - spring-boot-maven-plugin包：允许我们使用java -jar命令运行Spring Boot工程
 
+其他标签
+- \<modules>  maven聚合项目 modules标签
+- \<packaging> JAR类型的项目用于打包Java应用程序或库，而POM类型的项目则主要用于组织和管理多个子模块项目
+- \<repositories> 配置maven项目的远程仓库
+- \<build>
+        \<plugins>  配置插件
 ####yml文件配置参数
 例如数据库信息等
 统一管理参数配置
@@ -92,10 +100,10 @@ private
 @Scope("prototype") 每次使用该Bean都会创建一个新实例
 @Lazy  延迟初始化，第一次使用时才初始化
 
-####实体类注解：
-@Data
-@NoArgsConstructor
-@AllArgsConstructorxinzhongdekewang 
+####lombok实体类注解：
+@Data  （包含了@Getter@Setter，且有toString()，equals等方法）
+@NoArgsConstructor  生成无参构造
+@AllArgsConstructor  生成全参构造方法
 
 ####web三层架构注解
 controller（@RestController）  service(@Service)  mapper（接口、实现类 @Mapper） 
@@ -104,6 +112,13 @@ controller（@RestController）  service(@Service)  mapper（接口、实现类 
 @RequestParam(defaultvalue = '')
 @RequestBody(json自动封装为JAVA实体)
 @PathVariable（路径参数）
+
+####其他常用注解
+@Tag 
+可以帮助针对不同的环境，不同的用例或任何特定要求创建多个不同的测试计划。
+可以在测试计划中使用@IncludeTags或@ExcludeTags注解来过滤测试或包括测试
+@RequestMapping("/user/")
+@Operation(summary = "登录")  Swagger注解，描述 REST API，用于生成接口文档
 
 ###自定义starter
 ![](img/starter.jpg)
